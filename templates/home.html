@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <section class="job-form-section job-form-section--image">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="job-form-box">
+                        <h2 class="heading">Find and <span class="accent">Order</span> your Favourite
+                            <span class="accent">Food</span>.
+                        </h2>
+                        <form id="job-main-form" method="get" action="{% url 'menus' %}" class="job-main-form">
+                            {% csrf_token %}
+                            <div class="controls">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="profession">Food</label>
+                                            <input type="text" id="profession" name="name"
+                                                   placeholder="Food you are looking for" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit"
+                                                class="btn btn-outline-white-primary job-main-form__button">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg-light-gray">
+        <div class="container">
+            <h3 class="heading">Featured Food</h3>
+            <div class="row featured align-items-stretch">
+                {% for menu in menus %}
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <div class="box-image-text bg-visible full-height">
+                            <div class="top">
+                                <a href="{% url 'menu-detail' menu.id %}">
+                                    <div class="image">
+                                        <img src="{{ menu.image.url }}" alt="" width="350" height="320" class="img-fluid">
+                                    </div>
+                                    <div class="bg"></div>
+                                    <div class="logo">
+                                        <img src="{% static 'img/company-1.png' %}" alt="" style="max-width: 80px;">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="content">
+                                <h5><a href="{% url 'menu-detail' menu.id %}">{{ menu.name }}</a></h5>
+                                <h5>At {{ menu.vendor.user.first_name }} </h5>
+                                <p class="lead">
+                                  {% if menu.discount_price %}
+                                  <span class="mr-1">
+                                    <del> ${{ menu.price }}</del>
+                                  </span>
+                                  <span> ${{ menu.discount_price }}</span>
+                                  {% else %}
+                                  <span> ${{ menu.price }}</span>
+                                  {% endif %}
+                                </p>
+                                <p>{{ menu.description }}</p>
+                                {% if request.user.is_authenticated and request.user.is_superuser %}
+                                    <div class="inner-button-container">
+                                        <a href="{% url 'add-to-cart' menu.id %}" class="btn navbar-btn btn-outline-primary mb-5 mb-lg-0">
+                                            Add to Cart
+                                        </a>
+                                    </div>
+                                {% elif request.user.is_authenticated and menu.vendor.user == user %}
+
+                                {% elif request.user.is_authenticated %}
+                                <div class="inner-button-container">
+                                    <a href="{% url 'add-to-cart' menu.id %}" class="btn navbar-btn btn-outline-primary mb-5 mb-lg-0">
+                                        Add to Cart
+                                    </a>
+                                </div>
+                                {% else %}
+                                <div class="inner-button-container">
+                                    <a href="{% url 'menu-detail' menu.id %}" class="btn navbar-btn btn-outline-primary mb-5 mb-lg-0">
+                                        Add to Cart
+                                    </a>
+                                </div>
+                                {% endif %}
+                        </div>
+                    </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <h4 class="heading">Trending this month</h4>
+            {% for trending in trendings %}
+                <div class="job-listing  job-listing--last">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                            <div class="row">
+                                <div class="col-2">
+                                    <img src="{% static 'img/company-1.png' %}"
+                                         alt="ShareBoardd " class="img-fluid">
+                                </div>
+                                <div class="col-10">
+                                    <h4 class="job__title">
+                                        <a href="{% url 'menu-detail' trending.id %}">{{ trending.name }}</a>
+                                    </h4>
+                                    <p class="job__company">
+                                        <b>{{ trending.vendor.user.first_name }}</b>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-10 col-md-3 col-lg-2 ml-auto"><i class="fa fa-map-marker job__location"></i>
+                            {{ trending.vendor.user.last_name }}
+                        </div>
+                        <div class="col-10 col-md-3 col-lg-3 ml-auto">
+                            <p>Posted {{ trending.datetimecreated|timesince }}</p>
+                        </div>
+                        <div class="col-sm-12 col-md-2 col-lg-1">
+                            <div class="job__star">
+                                <a href="#" data-toggle="tooltip" data-placement="top"
+                                   title="Save to favourites" class="job__star__link">
+                                    <i class="fa fa-star"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section style="background-image: url({% static 'img/startup.jpg' %}); " class="section-divider">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p>Start searching for your favourite meal now! </p>
+                    <p><a href="{% url 'menus' %}" class="btn btn-outline-light">See other offers </a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

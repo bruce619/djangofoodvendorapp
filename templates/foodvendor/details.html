@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Job details
+{% endblock %}
+
+{% block content %}
+
+    <section class="bg-light-gray">
+        <div class="container">
+            <h1 class="heading">{{ menu.name }}<br>
+                <small>at <a href="#"> {{ menu.vendor.user.first_name }}</a></small>
+            </h1>
+            <div class="job-detail-description"><i class="fa fa-map-marker job__location"> </i>
+                {{ menu.vendor.user.last_name }} | Posted {{ menu.datetimecreated|timesince }} |
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="image">
+                        <img class="img-circle" src="{% static 'img/veggies.jpg' %}" width="200" height="200">
+                    </div>
+                    <hr>
+                    <p class="lead">
+                      {% if menu.discount_price %}
+                      <span class="mr-1">
+                        <del> ${{ menu.price }}</del>
+                      </span>
+                      <span> ${{ menu.discount_price }}</span>
+                      {% else %}
+                      <span> ${{ menu.price }}</span>
+                      {% endif %}
+                    </p>
+                    <blockquote class="blockquote">
+                        <p>{{ menu.description }}</p>
+                    </blockquote>
+                    <div class="job-detail__apply-bottom">
+                        {% if request.user.is_authenticated and request.user.is_superuser %}
+                         <form action="{% url 'add-to-cart' menu.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-success"
+                                   value="Buy Now"/>
+                        </form>
+                        {% elif request.user.is_authenticated and object.vendor.user == user %}
+                            <div>
+                                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'menu-delete' menu.id %}">DELETE</a>
+                                <a class="btn btn-warning btn-sm mt-1 mb-1" href="{% url 'menu-update' menu.id %}">EDIT MENU DETAILS</a>
+                            </div>
+                        {% elif request.user.is_authenticated %}
+                                <form action="{% url 'add-to-cart' menu.id %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-success"
+                                           value="Buy Now"/>
+                                </form>
+                        {% else %}
+                            <form method="post" action="{% url 'login' %}?next={{request.path}}">
+                              {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+                                 <button class="btn btn-outline-white-primary">Login to Buy</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-1"></div>
+                <div class="col-lg-3">
+                    <h4>{{ menu.vendor.user.first_name }}</h4>
+                    <p class="job-detail__company-description"><i class="fa fa-map-marker job__location"> </i>
+                        {{ menu.vendor.user.last_name }}
+                    </p>
+                    <p class="job-detail__social social social--outline">
+                        <a href="https://github.com/bruce619" target="_blank" data-toggle="tooltip" data-placement="top" title="Website"
+                           class="link">
+                            <i class="fa fa-github"></i>
+                        </a>
+                        <a href="https://twitter.com/chi_mu_anya" target="_blank" data-toggle="tooltip" data-placement="top" title="Twitter" class="twitter">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="https://web.facebook.com/MuanyaBruce" target="_blank" data-toggle="tooltip" data-placement="top" title="Facebook" class="facebook">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/mwlite/in/chimuanya-ibecheozor-192664173" target="_blank" data-toggle="tooltip" data-placement="top" title="LinkedIn" class="linkedin">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </p>
+                    <div class="job-detail__apply-top">
+                        {% if request.user.is_authenticated and request.user.is_customer %}
+                        <div>
+                            <a href="{% url 'add-to-cart' menu.id %}" class="btn navbar-btn btn-primary mb-5 mb-lg-0">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                Add to Cart
+                            </a>
+                        </div>
+                        {% elif request.user.is_authenticated and request.user.is_superuser %}
+                         <div>
+                            <a href="{% url 'add-to-cart' menu.id %}" class="btn navbar-btn btn-primary mb-5 mb-lg-0">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                Add to Cart
+                            </a>
+                        </div>
+                        {% elif request.user.is_authenticated and object.vendor.user == user %}
+                            <div>
+                                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'menu-delete' menu.id %}">DELETE</a>
+                                <a class="btn btn-warning btn-sm mt-1 mb-1" href="{% url 'menu-update' menu.id %}">EDIT MENU DETAILS</a>
+                            </div>
+                        {% elif request.user.is_authenticated %}
+                                <div>
+                                    <a href="{% url 'add-to-cart' menu.id %}" class="btn navbar-btn btn-primary mb-5 mb-lg-0">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        Add to Cart
+                                    </a>
+                                </div>
+                        {% else %}
+                            <form method="post" action="{% url 'login' %}?next={{request.path}}">
+                              {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+                                 <button class="btn btn-outline-white-primary">Login to Add to Cart</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

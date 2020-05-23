@@ -1,0 +1,8 @@
+Contact Name:
+{{ ref_code }}
+
+From:
+{{ sender_email }}
+
+Content:
+{{ message|safe|striptags }}
