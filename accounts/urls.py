@@ -2,8 +2,6 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from django.conf.urls import handler404, handler500
-from foodvendor.views import home
 from .views import *
 
 urlpatterns = [
@@ -35,7 +33,5 @@ urlpatterns = [
          name='password_reset_complete'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-handler404 = home.error_404
-handler500 = home.error_500
 
 
