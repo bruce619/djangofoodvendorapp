@@ -173,11 +173,10 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', '')
 # S3_USE_SIGV4 = os.environ.get('S3_USE_SIGV4')
 # AWS_LOCATION = 'static'
-# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-#
-DEFAULT_FILE_STORAGE = 'vendorapp.storage_backends.MediaStorage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# #
+# DEFAULT_FILE_STORAGE = 'vendorapp.storage_backends.MediaStorage'
+# # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
 
