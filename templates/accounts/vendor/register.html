@@ -9,8 +9,7 @@
         <div class="box">
             <h3 class="heading">New Vendor account</h3>
             <p class="lead">Not registered yet?</p>
-            <p class="text-muted">If you have any questions, please feel free to <a href="#">contact us</a>,
-                our customer service center is working for you 24/7.</p>
+            <p class="text-muted">If you want to sign up as a customer register <a href="{% url 'customer-register' %}">here</a></p>
             {% if form.errors %}
                 {% for field in form %}
                     {% for error in field.errors %}

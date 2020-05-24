@@ -23,7 +23,7 @@ class MenuAdmin(admin.ModelAdmin):
         (None,
          {'fields': ('vendor',)}),
         ('Food info', {'fields': ('name', 'description', 'price', 'discount_price', 'datetimecreated')}),
-        ('Frequency', {'fields': ('isrecurring', 'frequencyofreocurrence',)}),
+        ('Frequency', {'fields': ('isrecurring', 'frequencyofrecurrence',)}),
     )
 
 

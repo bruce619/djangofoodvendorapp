@@ -16,8 +16,8 @@ from ..forms import CheckoutForm, RefundForm, PaymentForm, NotificationForm
 from django.utils import timezone
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import get_template
-import schedule
-import time
+from django.db.models import IntegerField, F, ExpressionWrapper
+from django.db.models.functions import TruncDate, Mod, Now
 import random
 import string
 import stripe

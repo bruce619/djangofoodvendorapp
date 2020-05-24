@@ -80,14 +80,14 @@ class CreateMenuForm(forms.ModelForm):
             "name": "Food/Menu name",
             "image": "Upload Image",
             "isrecurring": "Is this item a Recurring item? check(✓) for yes, leave uncheck if No",
-            "frequencyofreocurrence": "Frequency Of Reocurrence",
+            "frequencyofrecurrence": "Frequency Of Recurrence",
         }
         widgets = {
             'isrecurring': forms.CheckboxInput(attrs={
                 'class': 'form-control',
             }
             ),
-            'frequencyofreocurrence': forms.Select(attrs={
+            'frequencyofrecurrence': forms.Select(attrs={
                 'class': 'form-control',
             }
             ),
@@ -117,14 +117,14 @@ class UpdateMenuForm(forms.ModelForm):
             "price": "Edit Price",
             "discount_price": "Discount Price",
             "isrecurring": "Is this item a Recurring item? check(✓) for yes, leave uncheck if No",
-            "frequencyofreocurrence": "Frequency Of Reocurrence"
+            "frequencyofrecurrence": "Frequency Of Recurrence"
         }
         widgets = {
             'isrecurring': forms.CheckboxInput(attrs={
                 'class': 'form-control',
             }
             ),
-            'frequencyofreocurrence': forms.Select(attrs={
+            'frequencyofrecurrence': forms.Select(attrs={
                 'class': 'form-control',
             }
             ),
