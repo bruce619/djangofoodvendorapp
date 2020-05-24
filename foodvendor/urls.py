@@ -27,11 +27,3 @@ urlpatterns = [
     path('notifications/', NotificationView.as_view(), name='notifications'),
     path('mark-as-read/<int:id>/', mark_as_read, name='mark-as-read')
 ]
-
-#  Saves static files in static folder
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-#  Saves media files in media folder
-if settings.DEBUG:
-   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

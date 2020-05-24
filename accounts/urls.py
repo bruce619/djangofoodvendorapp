@@ -2,7 +2,8 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-
+from django.conf.urls import handler404, handler500
+from foodvendor.views import home
 from .views import *
 
 urlpatterns = [
@@ -32,12 +33,9 @@ urlpatterns = [
     path('reset/done/',
          auth_views.PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html'),
          name='password_reset_complete'),
-]
-#  Saves static files in static folder
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-#  Saves media files in media folder
-if settings.DEBUG:
-   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = home.error_404
+handler500 = home.error_500
 
 
