@@ -24,7 +24,7 @@ class Menu(models.Model):
     SemiAnual = 180
     Yearly = 365
 
-    Frequency_Of_Reocurrence = (
+    Frequency_Of_Recurrence = (
         (none, "None"),
         (Daily, "Daily"),
         (Weekly, "Weekly"),
@@ -40,7 +40,7 @@ class Menu(models.Model):
     discount_price = models.FloatField(blank=True, null=True)
     image = models.ImageField(upload_to=user_directory_path, default='veggies.jpg')
     isrecurring = models.BooleanField(default=False)
-    frequencyofreocurrence = models.IntegerField(choices=Frequency_Of_Reocurrence)
+    frequencyofrecurrence = models.IntegerField(choices=Frequency_Of_Recurrence)
     datetimecreated = models.DateTimeField(verbose_name='date-time-created', auto_now_add=True)
 
     def __str__(self):
@@ -177,8 +177,10 @@ class Notification(models.Model):
     def __str__(self):
         return str(self.sender) + " to " + str(self.receiver) + " for " + str(self.order.ref_code)
 
-
-
+    '''
+        Orderstatus
+        (being delivered, received, refund_requested, refund granted)
+    '''
 
 
 
