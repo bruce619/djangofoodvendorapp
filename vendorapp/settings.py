@@ -22,7 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+# SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = 'pte$chf_629m%agdgca#bee+-!-px838k7d978h3+)bm300qqd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -62,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'vendorapp.urls'
@@ -175,7 +177,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #
 DEFAULT_FILE_STORAGE = 'vendorapp.storage_backends.MediaStorage'
-#
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
 
