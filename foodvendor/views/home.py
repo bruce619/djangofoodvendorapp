@@ -6,12 +6,11 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from ..filters import MenuFilter
 from django_filters.views import FilterView
-from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View
 from ..models import Menu, Order, Payment, Refund, Address, OrderStatus, MessageStatus, Notification
 from ..forms import CheckoutForm, RefundForm, PaymentForm, NotificationForm
 from django.utils import timezone
@@ -591,3 +590,13 @@ class OrderViewList(ListView, LoginRequiredMixin):
     def get_queryset(self):
         user = self.request.user
         return Order.objects.filter(user=user, ordered=True).distinct().order_by('-dateandtimeoforder')
+
+
+def error_404(request, exception):
+    data = {}
+    return render(request, 'error_404.html', data)
+
+
+def error_500(request):
+    data = {}
+    return render(request, 'error_500.html', data)

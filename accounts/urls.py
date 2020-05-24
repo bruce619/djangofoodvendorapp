@@ -8,8 +8,8 @@ from .views import *
 urlpatterns = [
     path('vendor/register/', VendorRegisterView.as_view(), name='vendor-register'),
     path('customer/register/', CustomerRegisterView.as_view(), name='customer-register'),
-    path('vendor/profile/update', EditVendorProfileView.as_view(), name='vendor-profile-update'),
-    path('customer/profile/update', EditCustomerProfileView.as_view(), name='customer-profile-update'),
+    path('vendor/profile/update/', EditVendorProfileView.as_view(), name='vendor-profile-update'),
+    path('customer/profile/update/', EditCustomerProfileView.as_view(), name='customer-profile-update'),
     path('logout', LogoutView.as_view(), name='logout'),
     path('login', LoginView.as_view(), name='login'),
 
