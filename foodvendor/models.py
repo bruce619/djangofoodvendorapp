@@ -9,12 +9,6 @@ ADDRESS_CHOICES = (
     ('S', 'Shipping'),
 )
 
-
-def user_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
-
-
 class Menu(models.Model):
     none = 0
     Daily = 1
@@ -38,7 +32,7 @@ class Menu(models.Model):
     description = models.TextField(verbose_name="Food Description", max_length=350, null=False, blank=False)
     price = models.FloatField(verbose_name="Price ($)", default=0.00)
     discount_price = models.FloatField(blank=True, null=True)
-    image = models.ImageField(upload_to=user_directory_path, default='veggies.jpg')
+    image = models.ImageField(upload_to='images/', default='veggies.jpg')
     isrecurring = models.BooleanField(default=False)
     frequencyofrecurrence = models.IntegerField(choices=Frequency_Of_Recurrence)
     datetimecreated = models.DateTimeField(verbose_name='date-time-created', auto_now_add=True)

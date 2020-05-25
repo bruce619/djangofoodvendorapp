@@ -68,11 +68,11 @@
                         <div class="row">
                             <div class="col-lg-6 form-group">
                                 <label for="salary">{{ form.price.label }}</label>
-                                 ₦:<input id="salary" name="price" type="number" min="100" class="form-control" value="{{ form.price.value|default_if_none:"" }}">
+                                $:<input id="salary" name="price" type="number" min="1.00" class="form-control" value="{{ form.price.value|default_if_none:"" }}">
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label for="validity">{{ form.discount_price.label }}</label>
-                                <input id="validity" name="discount_price" type="number" min="1" class="form-control" value="{{ form.discount_price.value|default_if_none:"" }}">
+                                $:<input id="validity" name="discount_price" type="number" min="1.00" class="form-control" value="{{ form.discount_price.value|default_if_none:"" }}">
                             </div>
                         </div>
                         <hr>

@@ -35,6 +35,7 @@ class HomeView(ListView):
 
     def get_queryset(self):
         return self.model.objects.all()[:6]
+        # return self.model.objects.filter(isrecurring=True).exclude(frequencyofrecurrence=0).annotate(duration=ExpressionWrapper((TruncDate(Now())-TruncDate('datetimecreated'))/F('frequencyofrecurrence'),  output_field=IntegerField())).annotate(reorder=ExpressionWrapper(Mod('duration', 10**8), output_field=IntegerField())).filter(reorder=0).order_by('datetimecreated').values()[:6]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
