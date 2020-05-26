@@ -398,7 +398,7 @@ transform:translateY(4px);
 text-transform:uppercase;
 letter-spacing:0.1em;
 color:#fff;
-font-size:0.8rem;
+font-size:1.2rem;
 font-family:"Montserrat",Helvetica,Arial,sans-serif;
 outline:none;
 }
@@ -494,7 +494,9 @@ border-color:#ddd;
 .dropdown-menu .dropdown-item:focus,.dropdown-menu .dropdown-item:active{
 background:#f8f9fa !important;
 color:#333;
-}@media (max-width: 991px){
+}
+
+@media (max-width: 991px){
 .navbar .dropdown-menu{
 background:none;
 border:none;
