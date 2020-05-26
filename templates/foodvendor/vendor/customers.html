@@ -60,7 +60,7 @@
                                 </td>
                                 <td>
                                     {% for i in customer.order_set.all %}
-                                        {{ i.dateandtimeoforder|date:'Y-m-d' }}
+                                        {{ i.dateandtimeoforder|date:'Y-m-d, H:i' }}
                                     {% endfor %}
                                 </td>
                                 <td>
