@@ -73,6 +73,7 @@
                                 </p>
                                 <p>{{ menu.description }}</p>
                                 {% if request.user.is_authenticated and request.user.is_superuser %}
+                                    <br><br>
                                     <div class="inner-button-container">
                                         <a href="{% url 'add-to-cart' menu.id %}" class="btn navbar-btn btn-outline-primary mb-5 mb-lg-0">
                                             Add to Cart
@@ -81,12 +82,14 @@
                                 {% elif request.user.is_authenticated and menu.vendor.user == user %}
 
                                 {% elif request.user.is_authenticated %}
+                                <br><br>
                                 <div class="inner-button-container">
                                     <a href="{% url 'add-to-cart' menu.id %}" class="btn navbar-btn btn-outline-primary mb-5 mb-lg-0">
                                         Add to Cart
                                     </a>
                                 </div>
                                 {% else %}
+                                <br><br>
                                 <div class="inner-button-container">
                                     <a href="{% url 'menu-detail' menu.id %}" class="btn navbar-btn btn-outline-primary mb-5 mb-lg-0">
                                         Add to Cart
