@@ -43,7 +43,7 @@
                                 </td>
                                 <td>{{ item.ref_code }}</td>
                                 <td>{{ item.get_total }}</td>
-                                <td>{{ item.dateandtimeoforder }}</td>
+                                <td>{{ item.dateandtimeoforder|date:'Y-m-d' }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

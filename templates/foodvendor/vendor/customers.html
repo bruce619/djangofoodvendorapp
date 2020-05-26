@@ -29,6 +29,7 @@
                             <th>Price</th>
                             <th>Total</th>
                             <th>Reference Code</th>
+                            <th>Date Ordered</th>
                             <th>Send Message</th>
                         </tr>
                         </thead>
@@ -55,6 +56,11 @@
                                 <td>
                                     {% for i in customer.order_set.all %}
                                         {{ i.ref_code}}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for i in customer.order_set.all %}
+                                        {{ i.dateandtimeoforder|date:'Y-m-d' }}
                                     {% endfor %}
                                 </td>
                                 <td>
