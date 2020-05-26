@@ -1,14 +1,18 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import HttpResponse, render, redirect
+from django.contrib import messages
 from django.utils.decorators import method_decorator
-from ..forms import CreateMenuForm, UpdateMenuForm, CreateOrderForm
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from ..forms import CreateMenuForm, UpdateMenuForm
+from django.views.generic import CreateView, View, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from accounts.models import Vendor
+from ..models import Menu, Order, MenuItem
 from accounts.decorators import user_is_vendor
-from accounts.models import User, Vendor
-from ..models import Menu, Order, MenuItem, Payment
-from accounts.decorators import user_is_vendor
+from django.http import JsonResponse
+from django.core import serializers
 
 
 class MenuCreateView(SuccessMessageMixin, CreateView):
@@ -138,6 +142,11 @@ class CustomersListView(ListView):
         context = super().get_context_data(**kwargs)
         context['menu'] = Menu.objects.get(id=self.kwargs['id'])
         return context
+
+
+
+
+
 
 
 
