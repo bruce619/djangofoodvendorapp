@@ -32,7 +32,5 @@ Functional Requirements (Customer)
 • Payment for food purchased (stripe was integrated with this app).
 
 NB: For development purpose only test credit cards can be used
-e.g 
-1. No authentication (default U.S. card): 4242 4242 4242 4242 (can be used with any future dates, cvv, and zipcode)
-2. Authentication required: 4000 0027 6000 3184 (can be used with any future dates, cvv, and zipcode)
+go to https://stripe.com/docs/testing to get a test card 
 
