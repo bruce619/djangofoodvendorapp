@@ -116,6 +116,11 @@ def is_valid_form(values):
 
 
 class CheckoutView(View):
+
+    @method_decorator(login_required(login_url=reverse_lazy('login')))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(self.request, *args, **kwargs)
+
     def get(self, *args, **kwargs):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
@@ -284,6 +289,11 @@ class CheckoutView(View):
 
 
 class PaymentView(View):
+
+    @method_decorator(login_required(login_url=reverse_lazy('login')))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(self.request, *args, **kwargs)
+
     def get(self, *args, **kwargs):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
@@ -435,6 +445,11 @@ class PaymentView(View):
 
 
 class RequestRefundView(View):
+
+    @method_decorator(login_required(login_url=reverse_lazy('login')))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(self.request, *args, **kwargs)
+
     def get(self, *args, **kwargs):
         form = RefundForm()
         context = {
@@ -578,6 +593,10 @@ class NotificationView(ListView):
     ordering = ['-dateTimeCreated']
     paginate_by = 7
 
+    @method_decorator(login_required(login_url=reverse_lazy('login')))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(self.request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['sent'] = MessageStatus.objects.get(name="message sent")
@@ -595,6 +614,10 @@ class OrderViewList(ListView, LoginRequiredMixin):
     context_object_name = 'order'
     ordering = ['-dateandtimeoforder']
     paginate_by = 3
+
+    @method_decorator(login_required(login_url=reverse_lazy('login')))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(self.request, *args, **kwargs)
 
     def get_queryset(self):
         user = self.request.user
