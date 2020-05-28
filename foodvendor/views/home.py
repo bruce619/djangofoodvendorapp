@@ -37,7 +37,7 @@ class HomeView(ListView):
 
     def get_queryset(self):
         try:
-            menu = Menu.objects.get(isrecurring=True)
+            menu = Menu.objects.filter(isrecurring=True)
             time_created = menu.datetimecreated.strftime('%d/%m/%Y %H:%M:%S')
             current_date = timezone.now().strftime('%d/%m/%Y %H:%M:%S')
             if menu.frequencyofrecurrence == 1:
