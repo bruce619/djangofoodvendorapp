@@ -2,7 +2,7 @@ from background_task import background
 
 
 @background(schedule=60)
-def update_date(menu_date, new_date=None):
-    days_after = (menu_date + new_date).isoformat()
-    return days_after
-
+def update_date(obj, datetimecreated, new_date):
+    obj.objects.get(datetimecreated=datetimecreated)
+    obj.objects.update(datetimecreated=new_date)
+    obj.save()

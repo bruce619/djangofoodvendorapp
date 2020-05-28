@@ -16,8 +16,9 @@ from ..forms import CheckoutForm, RefundForm, PaymentForm, NotificationForm
 from django.utils import timezone
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import get_template
-from django.db.models import IntegerField, F, ExpressionWrapper
-from django.db.models.functions import TruncDate, Mod, Now
+from ..update_task import update_date
+from background_task.models import Task
+import datetime
 import random
 import string
 import stripe
@@ -35,8 +36,21 @@ class HomeView(ListView):
     ordering = ['-datetimecreated']
 
     def get_queryset(self):
-        return self.model.objects.all()[:6]
-        # return self.model.objects.filter(isrecurring=True).exclude(frequencyofrecurrence=0).annotate(duration=ExpressionWrapper((TruncDate(Now())-TruncDate('datetimecreated'))/F('frequencyofrecurrence'),  output_field=IntegerField())).annotate(reorder=ExpressionWrapper(Mod('duration', 10**8), output_field=IntegerField())).filter(reorder=0).order_by('datetimecreated').values()[:6]
+        try:
+            menu = Menu.objects.get(isrecurring=True)
+            time_created = menu.datetimecreated.strftime('%d/%m/%Y %H:%M:%S')
+            current_date = timezone.now().strftime('%d/%m/%Y %H:%M:%S')
+            if menu.frequencyofrecurrence == 1:
+                update_date(menu, time_created, current_date, repeat=Task.DAILY)
+            elif menu.frequencyofrecurrence == 7:
+                update_date(menu, time_created, current_date, repeat=Task.WEEKLY)
+            elif menu.frequencyofrecurrence == 14:
+                update_date(menu, time_created, current_date, repeat=Task.EVERY_2_WEEKS)
+            elif menu.frequencyofrecurrence == 30:
+                update_date(menu, time_created, current_date, repeat=Task.EVERY_4_WEEKS)
+            return self.model.objects.all()[:6]
+        except ObjectDoesNotExist:
+            return self.model.objects.all()[:6]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

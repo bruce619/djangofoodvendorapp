@@ -4,20 +4,7 @@ from accounts.models import Vendor
 from PIL import Image
 from django_countries.fields import CountryField
 from django.core.files.storage import default_storage as storage
-import datetime
-from .update_task import update_date
-from background_task.models import Task
 from django.utils import timezone
-
-import json
-
-
-class DateTimeEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, datetime.datetime):
-            return o.isoformat()
-
-        return json.JSONEncoder.default(self, o)
 
 
 ADDRESS_CHOICES = (
