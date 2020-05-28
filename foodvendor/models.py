@@ -48,19 +48,19 @@ class Menu(models.Model):
         self.datetimecreated = timezone.now()
         if self.isrecurring:
             if self.frequencyofrecurrence == 1:
-                update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=1),
+                update_date(self.datetimecreated, new_date=datetime.timedelta,
                             repeat=Task.DAILY)
             elif self.frequencyofrecurrence == 7:
                 self.datetimecreated = timezone.now()
-                update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=7),
+                update_date(self.datetimecreated, new_date=datetime.timedelta,
                             repeat=Task.WEEKLY)
             elif self.frequencyofrecurrence == 14:
                 self.datetimecreated = timezone.now()
-                update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=14),
+                update_date(self.datetimecreated, new_date=datetime.timedelta,
                             repeat=Task.EVERY_2_WEEKS)
             elif self.frequencyofrecurrence == 30:
                 self.datetimecreated = timezone.now()
-                update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=30),
+                update_date(self.datetimecreated, new_date=datetime.timedelta,
                             repeat=Task.EVERY_4_WEEKS)
         else:
             return self.datetimecreated
