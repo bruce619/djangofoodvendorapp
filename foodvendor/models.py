@@ -7,8 +7,17 @@ from django.core.files.storage import default_storage as storage
 import datetime
 from .update_task import update_date
 from background_task.models import Task
-import json
 from django.utils import timezone
+
+import json
+
+
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, datetime.datetime):
+            return o.isoformat()
+
+        return json.JSONEncoder.default(self, o)
 
 
 ADDRESS_CHOICES = (
@@ -46,25 +55,24 @@ class Menu(models.Model):
 
     def save(self, *args, **kwargs):
         self.datetimecreated = timezone.now()
-        if self.isrecurring:
-            if self.frequencyofrecurrence == 1:
-                update_date(self.datetimecreated, new_date=datetime.timedelta,
-                            repeat=Task.DAILY)
-            elif self.frequencyofrecurrence == 7:
-                self.datetimecreated = timezone.now()
-                update_date(self.datetimecreated, new_date=datetime.timedelta,
-                            repeat=Task.WEEKLY)
-            elif self.frequencyofrecurrence == 14:
-                self.datetimecreated = timezone.now()
-                update_date(self.datetimecreated, new_date=datetime.timedelta,
-                            repeat=Task.EVERY_2_WEEKS)
-            elif self.frequencyofrecurrence == 30:
-                self.datetimecreated = timezone.now()
-                update_date(self.datetimecreated, new_date=datetime.timedelta,
-                            repeat=Task.EVERY_4_WEEKS)
-        else:
-            return self.datetimecreated
-
+        # if self.isrecurring:
+        #     if self.frequencyofrecurrence == 1:
+        #         update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=1),
+        #                     repeat=Task.DAILY)
+        #     elif self.frequencyofrecurrence == 7:
+        #         self.datetimecreated = timezone.now()
+        #         update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=7),
+        #                     repeat=Task.WEEKLY)
+        #     elif self.frequencyofrecurrence == 14:
+        #         self.datetimecreated = timezone.now()
+        #         update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=14),
+        #                     repeat=Task.EVERY_2_WEEKS)
+        #     elif self.frequencyofrecurrence == 30:
+        #         self.datetimecreated = timezone.now()
+        #         update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=30),
+        #                     repeat=Task.EVERY_4_WEEKS)
+        # else:
+        #     return self.datetimecreated
         super(Menu, self).save(*args, **kwargs)
 
         img = Image.open(self.image)
