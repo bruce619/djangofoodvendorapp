@@ -4,7 +4,6 @@ from accounts.models import Vendor
 from PIL import Image
 from django_countries.fields import CountryField
 from django.core.files.storage import default_storage as storage
-import datetime
 from .update_task import update_date
 from background_task.models import Task
 import json
@@ -56,19 +55,19 @@ class Menu(models.Model):
 
         if self.id and self.isrecurring:
             if self.frequencyofrecurrence == 1:
-                update_date(menu_date, new_date=datetime.timedelta(days=1), schedule=datetime.timedelta(days=1),
+                update_date(menu_date, new_date=timezone.timedelta(days=1), schedule=timezone.timedelta(days=1),
                             repeat=Task.DAILY)
             elif self.frequencyofrecurrence == 7:
-                update_date(menu_date, new_date=datetime.timedelta(days=7), schedule=datetime.timedelta(days=7),
+                update_date(menu_date, new_date=timezone.timedelta(days=7), schedule=timezone.timedelta(days=7),
                             repeat=Task.DAILY)
             elif self.frequencyofrecurrence == 14:
-                update_date(menu_date, new_date=datetime.timedelta(days=14), schedule=datetime.timedelta(days=14),
+                update_date(menu_date, new_date=timezone.timedelta(days=14), schedule=timezone.timedelta(days=14),
                             repeat=Task.DAILY)
             elif self.frequencyofrecurrence == 30:
-                update_date(menu_date, new_date=datetime.timedelta(days=30), schedule=datetime.timedelta(days=1),
+                update_date(menu_date, new_date=timezone.timedelta(days=30), schedule=timezone.timedelta(days=1),
                             repeat=Task.DAILY)
             else:
-                update_date(menu_date, new_date=datetime.timedelta(days=0), schedule=datetime.timedelta(days=1),
+                update_date(menu_date, new_date=timezone.timedelta(days=0), schedule=timezone.timedelta(days=1),
                             repeat=Task.DAILY)
 
         img = Image.open(self.image)
