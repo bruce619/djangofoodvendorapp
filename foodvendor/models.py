@@ -8,14 +8,15 @@ import datetime
 from .update_task import update_date
 from background_task.models import Task
 import json
+from django.utils import timezone
 
 
-class DateTimeEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, (datetime.datetime,)):
-            return o.isoformat()
-
-        return json.JSONEncoder.default(self, o)
+# class DateTimeEncoder(json.JSONEncoder):
+#     def default(self, o):
+#         if isinstance(o, (datetime.datetime, datetime.timedelta, datetime.date)):
+#             return o.isoformat()
+#
+#         return json.JSONEncoder.default(self, o)
 
 
 ADDRESS_CHOICES = (
@@ -44,7 +45,7 @@ class Menu(models.Model):
     image = models.ImageField(upload_to='images/', default='veggies.jpg')
     isrecurring = models.BooleanField(default=False)
     frequencyofrecurrence = models.IntegerField(choices=Frequency_Of_Recurrence)
-    datetimecreated = models.DateTimeField(verbose_name='date-time-created', auto_now_add=True)
+    datetimecreated = models.DateTimeField(verbose_name='date-time-created', default=timezone.now)
 
     def __str__(self):
         return self.name + " by " + f'{self.vendor.user.first_name}'
@@ -55,23 +56,20 @@ class Menu(models.Model):
 
         if self.id and self.isrecurring:
             if self.frequencyofrecurrence == 1:
-                update_date(menu_date, new_date=json.dumps(datetime.timedelta(days=1), cls=DateTimeEncoder),
-                            schedule=json.dumps(datetime.timedelta(days=1), cls=DateTimeEncoder), repeat=Task.DAILY)
+                update_date(menu_date, new_date=datetime.timedelta(days=1), schedule=datetime.timedelta(days=1),
+                            repeat=Task.DAILY)
             elif self.frequencyofrecurrence == 7:
-                update_date(menu_date, new_date=json.dumps(datetime.timedelta(days=7), cls=DateTimeEncoder),
-                            schedule=json.dumps(datetime.timedelta(days=7), cls=DateTimeEncoder), repeat=Task.WEEKLY)
+                update_date(menu_date, new_date=datetime.timedelta(days=7), schedule=datetime.timedelta(days=7),
+                            repeat=Task.DAILY)
             elif self.frequencyofrecurrence == 14:
-                update_date(menu_date, new_date=json.dumps(datetime.timedelta(days=14), cls=DateTimeEncoder),
-                            schedule=json.dumps(datetime.timedelta(days=14), cls=DateTimeEncoder),
-                            repeat=Task.EVERY_2_WEEKS)
+                update_date(menu_date, new_date=datetime.timedelta(days=14), schedule=datetime.timedelta(days=14),
+                            repeat=Task.DAILY)
             elif self.frequencyofrecurrence == 30:
-                update_date(menu_date, new_date=json.dumps(datetime.timedelta(days=30), cls=DateTimeEncoder),
-                            schedule=json.dumps(datetime.timedelta(days=30), cls=DateTimeEncoder),
-                            repeat=Task.EVERY_4_WEEKS)
+                update_date(menu_date, new_date=datetime.timedelta(days=30), schedule=datetime.timedelta(days=1),
+                            repeat=Task.DAILY)
             else:
-                update_date(menu_date, new_date=json.dumps(datetime.timedelta(days=0), cls=DateTimeEncoder),
-                            schedule=json.dumps(datetime.timedelta(days=0), cls=DateTimeEncoder),
-                            repeat=None)
+                update_date(menu_date, new_date=datetime.timedelta(days=0), schedule=datetime.timedelta(days=1),
+                            repeat=Task.DAILY)
 
         img = Image.open(self.image)
 
