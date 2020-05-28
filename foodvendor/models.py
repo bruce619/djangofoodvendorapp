@@ -48,31 +48,12 @@ class Menu(models.Model):
     image = models.ImageField(upload_to='images/', default='veggies.jpg')
     isrecurring = models.BooleanField(default=False)
     frequencyofrecurrence = models.IntegerField(choices=Frequency_Of_Recurrence)
-    datetimecreated = models.DateTimeField(verbose_name='date-time-created')
+    datetimecreated = models.DateTimeField(verbose_name='date-time-created', default=timezone.now)
 
     def __str__(self):
         return self.name + " by " + f'{self.vendor.user.first_name}'
 
     def save(self, *args, **kwargs):
-        self.datetimecreated = timezone.now()
-        # if self.isrecurring:
-        #     if self.frequencyofrecurrence == 1:
-        #         update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=1),
-        #                     repeat=Task.DAILY)
-        #     elif self.frequencyofrecurrence == 7:
-        #         self.datetimecreated = timezone.now()
-        #         update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=7),
-        #                     repeat=Task.WEEKLY)
-        #     elif self.frequencyofrecurrence == 14:
-        #         self.datetimecreated = timezone.now()
-        #         update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=14),
-        #                     repeat=Task.EVERY_2_WEEKS)
-        #     elif self.frequencyofrecurrence == 30:
-        #         self.datetimecreated = timezone.now()
-        #         update_date(self.datetimecreated, new_date=datetime.timedelta, schedule=datetime.timedelta(days=30),
-        #                     repeat=Task.EVERY_4_WEEKS)
-        # else:
-        #     return self.datetimecreated
         super(Menu, self).save(*args, **kwargs)
 
         img = Image.open(self.image)
