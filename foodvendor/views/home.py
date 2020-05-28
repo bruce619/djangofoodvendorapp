@@ -32,6 +32,7 @@ class HomeView(ListView):
     model = Menu
     template_name = 'home.html'
     context_object_name = 'menus'
+    ordering = ['-datetimecreated']
 
     def get_queryset(self):
         return self.model.objects.all()[:6]
