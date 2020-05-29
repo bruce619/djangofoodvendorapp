@@ -18,7 +18,7 @@
             <div class="card-body">
                 <h3 class="text-center">Card Payment</h3>
                 <hr>
-                <p>go to <a href="https://stripe.com/docs/testing">Test Cards (visa, Visa-debit, Master)</a> to get a test card</p>
+                <p>go to <a target="_blank" href="https://stripe.com/docs/testing">https://stripe.com/docs/testing</a> to get a test card</p>
                 <script src="https://js.stripe.com/v3/"></script>
                 {% if card %}
                   <div style="padding: 5px 30px;">
@@ -90,7 +90,7 @@
 {% block javascript %}
 
 <script nonce="">  // Create a Stripe client.
-  var stripe = Stripe("{{STRIPE_SECRET_KEY}}");
+  var stripe = Stripe("{{STRIPE_PUBLIC_KEY}}");
 
   // Create an instance of Elements.
   var elements = stripe.elements();
