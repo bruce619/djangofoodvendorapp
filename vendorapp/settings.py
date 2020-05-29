@@ -129,10 +129,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-# STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY")
-STRIPE_PUBLIC_KEY = 'pk_test_foKnZ6xpadfYdBh8GzGPWdKL00qqxIxqMK'
-# STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
-STRIPE_SECRET_KEY = 'sk_test_7QivM3fdWgj4jbuV5gZPTCXr00O0q2i5tG'
+STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
