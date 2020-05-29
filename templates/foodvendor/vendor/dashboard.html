@@ -48,7 +48,14 @@
                                     <td>
                                         <span class="badge badge-success">{{ menu.discount_price }}</span>
                                     </td>
-                                    <td>{{ menu.frequencyofrecurrence }} days</td>
+                                    <td>
+                                        {% if menu.isrecurring %}
+                                            {{ menu.frequencyofrecurrence }} days
+                                        {% else %}
+                                            0 days
+                                        {% endif %}
+
+                                    </td>
                                     <td>{{ menu.datetimecreated }}</td>
                                     <td>
                                         <a href="{% url 'all-customers' menu.id %}"
