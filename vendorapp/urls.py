@@ -7,7 +7,7 @@ from foodvendor.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),
     path('', include('foodvendor.urls'))
 ]
 
