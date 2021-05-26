@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'storages',
     'django_filters',
-    'bootstrapform',
     'django_countries',
 
     #  custom app
@@ -184,3 +183,16 @@ DATABASES['default'].update(db_from_env)
 
 django_heroku.settings(locals())
 
+INSTALLED_APPS = INSTALLED_APPS + [
+    'debug_toolbar'
+]
+
+MIDDLEWARE = MIDDLEWARE + [
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
+]
+
+INTERNAL_IPS = [
+    # ...
+    '127.0.0.1',
+    # ...
+]
